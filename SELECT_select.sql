@@ -8,7 +8,8 @@ SELECT name FROM world
 -- Show the countries in Europe with a per capita GDP greater than 'United Kingdom'.
 SELECT name
 FROM world
-WHERE continent = 'EUROPE' AND (gdp/population) >
+WHERE continent = 'EUROPE' 
+  AND (gdp/population) >
   (SELECT (gdp/population) FROM world
     WHERE name = 'United Kingdom')
 
@@ -63,8 +64,8 @@ WHERE 25000000 >= ALL(SELECT population FROM world b WHERE b.continent LIKE a.co
 
 -- Some countries have populations more than three times that of any of their neighbours (in the same continent). Give the countries and continents.
 SELECT name, continent 
-FROM world w
+FROM world a
   WHERE population >= ALL(SELECT population*3
-  FROM world y
-  WHERE w.continent = y.continent
-  and y.name != w.name)
+  FROM world b
+  WHERE a.continent = b.continent
+  and a.name != b.name)
